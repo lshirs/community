@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!--访问该页面时,在此处生成CSRF令牌.-->
+<!--	<meta name="_csrf" th:content="${_csrf.token}">-->
+<!--	<meta name="_csrf_header" th:content="${_csrf.headerName}">-->
+	<link rel="icon" href="data:image/png;base64,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%0Agg=="/>
+
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
+	<title>牛客网-首页</title>
+</head>
+<body>	
+	<div class="nk-container">
+		<!-- 头部 -->
+		<header class="bg-dark sticky-top" th:fragment="header">
+			<div class="container">
+				<!-- 导航 -->
+				<nav class="navbar navbar-expand-lg navbar-dark">
+					<!-- logo -->
+					<a class="navbar-brand" href="#"></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<!-- 功能 -->
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item ml-3 btn-group-vertical">
+								<a class="nav-link" th:href="@{/index}">首页</a>
+							</li>
+							<li class="nav-item ml-3 btn-group-vertical" th:if="${loginUser!=null}">
+								<a class="nav-link position-relative" th:href="@{/letter/list}">消息<span class="badge badge-danger" th:text="${allUnreadCount!=0?allUnreadCount:''}">12</span></a>
+							</li>
+							<li class="nav-item ml-3 btn-group-vertical" th:if="${loginUser==null}">
+								<a class="nav-link" th:href="@{/register}">注册</a>
+							</li>
+							<li class="nav-item ml-3 btn-group-vertical" th:if="${loginUser==null}">
+								<a class="nav-link" th:href="@{/login}">登录</a>
+							</li>
+							<li class="nav-item ml-3 btn-group-vertical dropdown" th:if="${loginUser!=null}">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<img th:src="${loginUser.headerUrl}" class="rounded-circle" style="width:30px;"/>
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item text-center" th:href="@{|/user/profile/${loginUser.id}|}">个人主页</a>
+									<a class="dropdown-item text-center" th:href="@{/user/setting}">账号设置</a>
+									<a class="dropdown-item text-center" th:href="@{/logout}">退出登录</a>
+									<div class="dropdown-divider"></div>
+									<span class="dropdown-item text-center text-secondary" th:utext="${loginUser.username}">nowcoder</span>
+								</div>
+							</li>
+						</ul>
+						<!-- 搜索 -->
+						<form class="form-inline my-2 my-lg-0" method="get" th:action="@{/search}">
+							<input class="form-control mr-sm-2" type="search" aria-label="Search" name="keyword" th:value="${keyword}"/>
+							<button class="btn btn-outline-light my-2 my-sm-0" type="submit">搜索</button>
+						</form>
+					</div>
+				</nav>
+			</div>
+		</header>
+
+		<!-- 内容 -->
+		<div class="main">
+			<div class="container">
+				<div class="position-relative">
+					<!-- 筛选条件 -->
+					<ul class="nav nav-tabs mb-3">
+						<li class="nav-item">
+							<a th:class="|nav-link ${orderMode==0?'active':''}|" th:href="@{/index(orderMode=0)}">最新</a>
+						</li>
+						<li class="nav-item">
+							<a th:class="|nav-link ${orderMode==1?'active':''}|" th:href="@{/index(orderMode=1)}">最热</a>
+						</li>
+					</ul>
+					<button type="button" class="btn btn-primary btn-sm position-absolute rt-0" data-toggle="modal" data-target="#publishModal" th:if="${loginUser!=null}">我要发布</button>
+				</div>
+				<!-- 弹出框 -->
+				<div class="modal fade" id="publishModal" tabindex="-1" role="dialog" aria-labelledby="publishModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="publishModalLabel">新帖发布</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form>
+									<div class="form-group">
+										<label for="recipient-name" class="col-form-label">标题：</label>
+										<input type="text" class="form-control" id="recipient-name">
+									</div>
+									<div class="form-group">
+										<label for="message-text" class="col-form-label">正文：</label>
+										<textarea class="form-control" id="message-text" rows="15"></textarea>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+								<button type="button" class="btn btn-primary" id="publishBtn">发布</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 提示框 -->
+				<div class="modal fade" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="hintModalLabel">提示</h5>
+							</div>
+							<div class="modal-body" id="hintBody">
+								发布完毕!
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 帖子列表 -->
+				<ul class="list-unstyled">
+					<li class="media pb-3 pt-3 mb-3 border-bottom" th:each="map:${discussPosts}">
+						<a th:href="@{|/user/profile/${map.user.id}|}">
+							<img th:src="${map.user.headerUrl}" class="mr-4 rounded-circle" alt="用户头像" style="width:50px;height:50px;">
+						</a>
+						<div class="media-body">
+							<h6 class="mt-0 mb-3">
+								<a th:href="@{|/discuss/detail/${map.post.id}|}" th:utext="${map.post.title}">备战春招，面试刷题跟他复习，一个月全搞定！</a>
+								<span class="badge badge-secondary bg-primary" th:if="${map.post.type==1}">置顶</span>
+								<span class="badge badge-secondary bg-danger" th:if="${map.post.status==1}">精华</span>
+							</h6>
+							<div class="text-muted font-size-12">
+								<u class="mr-3" th:utext="${map.user.username}">寒江雪</u> 发布于 <b th:text="${#dates.format(map.post.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-15 15:32:18</b>
+								<ul class="d-inline float-right">
+									<li class="d-inline ml-2">赞 <span th:text="${map.likeCount}">11</span></li>
+									<li class="d-inline ml-2">|</li>
+									<li class="d-inline ml-2">回帖 <span th:text="${map.post.commentCount}">7</span></li>
+								</ul>
+							</div>
+						</div>						
+					</li>
+				</ul>
+				<!-- 分页 -->
+				<nav class="mt-5" th:if="${page.rows>0}" th:fragment="pagination">
+					<ul class="pagination justify-content-center">
+						<li class="page-item">
+							<a class="page-link" th:href="@{${page.path}(current=1)}">首页</a>
+						</li>
+						<li th:class="|page-item ${page.current==1?'disabled':''}|">
+							<a class="page-link" th:href="@{${page.path}(current=${page.current-1})}">上一页</a></li>
+						<li th:class="|page-item ${i==page.current?'active':''}|" th:each="i:${#numbers.sequence(page.from,page.to)}">
+							<a class="page-link" th:href="@{${page.path}(current=${i})}" th:text="${i}">1</a>
+						</li>
+						<li th:class="|page-item ${page.current==page.total?'disabled':''}|">
+							<a class="page-link" th:href="@{${page.path}(current=${page.current+1})}">下一页</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" th:href="@{${page.path}(current=${page.total})}">末页</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+
+		<!-- 尾部 -->
+		<footer class="bg-dark" th:fragment="foot">
+			<div class="container">
+				<div class="row">
+
+					<!-- 公司信息 -->
+					<div class="col-12 detail-info">
+						<div class="row">
+							<div class="col">
+								<ul class="nav">
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">关于我们</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">加入我们</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">意见反馈</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">企业服务</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">联系我们</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">免责声明</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">友情链接</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<ul class="nav btn-group-vertical company-info">
+									<li class="nav-item text-white-50">
+										联系方式：123456456489(电话)&nbsp;&nbsp;&nbsp;&nbsp;
+									<li class="nav-item text-white-50">
+										©2020 All rights reserved
+									</li>
+									<li class="nav-item text-white-50">
+										京ICP备123456789号&nbsp;&nbsp;&nbsp;&nbsp;
+										<img src="http://static.nowcoder.com/company/images/res/ghs.png" style="width:18px;" />
+										京公网安备 1234564958789号
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<script th:src="@{/js/jquery.js}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script th:src="@{/js/global.js}"></script>
+	<script th:src="@{js/index.js}"></script>
+
+</body>
+</html>
